@@ -6,7 +6,7 @@
 #include <string.h>
 
 // gcc -pthread -fno-stack-protector main.c -o main.o
-// ./main.o arq1.dat arq2.dat arq3.dat arq4.dat arq5.dat  
+// ./main.o 4 arq1.dat arq2.dat arq3.dat arq4.dat arq5.dat  
 
 pthread_t outrosTIDs[5];
 
