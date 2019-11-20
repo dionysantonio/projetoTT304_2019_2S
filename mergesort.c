@@ -6,7 +6,7 @@
 #include <string.h>
 
 // gcc -pthread -fno-stack-protector mergesort.c -o mergesort.o
-// ./mergesort.o 4 arq1.dat arq2.dat arq3.dat arq4.dat arq5.dat -o saida.dat
+// ./mergesort.o 4 arq1.dat arq2.dat arq3.dat arq4.dat arq5.dat
 
 pthread_t outrosTIDs[5];
 
@@ -211,7 +211,7 @@ int main(int argc, char *argv[])
 
     }
     vetTotal = malloc(size*sizeof(int));
-    for(i=2;i<argc;i++){//lê todos os arquivos e grava em um unico vetor
+    for(i=2;i<argc;i++){//lÃª todos os arquivos e grava em um unico vetor
 	
 	line = lerArquivo(argv[i],vetTotal,line);
         
@@ -255,7 +255,7 @@ int main(int argc, char *argv[])
     k=0;
 
     /*o vetor final fica ordenado em partes iguais definidas pela quantidade de threads
-	Ex: se a quantidade de threads passada no parametro eh 4, o vetor é dividido em 4 partes iguais e ordenado somente nos intervalos dessas quatro partes
+	Ex: se a quantidade de threads passada no parametro eh 4, o vetor Ã© dividido em 4 partes iguais e ordenado somente nos intervalos dessas quatro partes
 	O loop abaixo junta as quatro partes em uma so.	
 
 */
