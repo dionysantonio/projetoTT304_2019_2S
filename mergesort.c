@@ -5,8 +5,8 @@
 #include <pthread.h>
 #include <string.h>
 
-// gcc -pthread -fno-stack-protector mergesort.c -o saida.dat
-// ./saida.dat 4 arq1.dat arq2.dat arq3.dat arq4.dat arq5.dat  
+// gcc -pthread -fno-stack-protector mergesort.c -o mergesort.o
+// ./mergesort.o 4 arq1.dat arq2.dat arq3.dat arq4.dat arq5.dat -o saida.dat
 
 pthread_t outrosTIDs[5];
 
