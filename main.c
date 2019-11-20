@@ -10,6 +10,7 @@
 
 pthread_t outrosTIDs[5];
 
+//struct passado como argumento na thread
 struct thread_args {
     int * arr;
     int left;
@@ -17,6 +18,7 @@ struct thread_args {
     int first;
 };
 
+//funcao passada na thread para ordenacao dos dados
 void * mergeSort(void * args){
 
     struct thread_args *arg = args;
@@ -99,6 +101,7 @@ void * mergeSort(void * args){
     }
 }
 
+//funcao que identifica quantidade de linhas de cada arquivo
 int numLinhas(char filename[]){
 	int i=0;
 	char ch ;
@@ -121,6 +124,7 @@ int numLinhas(char filename[]){
 
 }
 
+//funcao que faz a leitura do arquivo e armazena no vetor total
 int lerArquivo(char file_name[],int arquivo[], int line){
 
     char ch ;
@@ -166,7 +170,7 @@ int lerArquivo(char file_name[],int arquivo[], int line){
  
 }
 
-
+//funcao que identifica menor valor entre parametros passados
 int menorValor(int i, int j[],int m[], int * arr){
 	int k=0;
 	int min =0;
@@ -197,9 +201,9 @@ int main(int argc, char *argv[])
     int k = 0,j,m=0,line=0;
 
    printf("Inicio de execucao\n");
-   //printf("%d %s %s",argc,argv[2],argv[3]);
+ 
     int i;
-    //realiza leitura de cada arquivo e armazena em array vetFiles
+    
     //tambem pega o total de numeros por arquivo
     printf("Realizando leitura dos arquivos\n");
     for(i=2;i<argc;i++){//contar qtd linhas
@@ -212,17 +216,18 @@ int main(int argc, char *argv[])
 	line = lerArquivo(argv[i],vetTotal,line);
         
     }
-    
+    //cria o vetor final para armazenar o vetor ordenado
     vetFinal = malloc(size*sizeof(int));
     printf("\nOrdenando os dados\n");
 
     
-    
+    //pega data/hora atual para calcular tempo de execucao da thread
     clock_gettime(CLOCK_MONOTONIC, &tinicio);
     
     i = atoi(argv[1]);
     k=0;
     int n[i],p[i];
+    //faz a criacao das threads
     while(k<i){
 	arg[k].arr = vetTotal;
 	arg[k].left=(size)*k/i;
@@ -242,14 +247,18 @@ int main(int argc, char *argv[])
         pthread_join(outrosTIDs[k], NULL);
 	k++;
     }
-    
+    //pega horario de final da execucao das threads e checa tempo de execucao
     clock_gettime(CLOCK_MONOTONIC, &tfim);
     printf("\nTempo de ordenacao ou thread: %f segundos \n",
            (((double)tfim.tv_sec)/1000000000+((double)tfim.tv_nsec)/1000000000)
            - (((double)tinicio.tv_sec)/1000000000 + ((double)tinicio.tv_nsec)/1000000000));
     k=0;
 
+    /*o vetor final fica ordenado em partes iguais definidas pela quantidade de threads
+	Ex: se a quantidade de threads passada no parametro eh 4, o vetor é dividido em 4 partes iguais e ordenado somente nos intervalos dessas quatro partes
+	O loop abaixo junta as quatro partes em uma so.	
 
+*/
     while(k<size){
    
 	int proximoItem=0;
@@ -274,19 +283,21 @@ int main(int argc, char *argv[])
 	}
 
 
-
+    //faz a gravacao dos arquivos em client.data
     printf("\nGravando os dados\n");
-    FILE *f = fopen("./client.data", "w");
+    FILE *f = fopen("./client.dat", "w");
 
     for(i=0;i<size;i++){
         fprintf(f,"%d\n",vetFinal[i]);
 	
     }
-
+/*
+	O codigo abaixo foi criado para gravar o tempo de execucao em um arquivo para depois analisar.
     FILE *fs = fopen("./tempos.data", "a");
     fprintf(fs,"%s;%f\n",argv[1],
            (((double)tfim.tv_sec)/1000000000+((double)tfim.tv_nsec)/1000000000)
            - (((double)tinicio.tv_sec)/1000000000 + ((double)tinicio.tv_nsec)/1000000000));
+*/
     printf("\nFim da execucao\n");
  
 
