@@ -8,7 +8,7 @@
 // gcc -pthread -fno-stack-protector mergesort.c -o mergesort.o
 // ./mergesort.o 4 arq1.dat arq2.dat arq3.dat arq4.dat arq5.dat
 
-pthread_t outrosTIDs[5];
+pthread_t outrosTIDs[16];
 
 //struct passado como argumento na thread
 struct thread_args {
